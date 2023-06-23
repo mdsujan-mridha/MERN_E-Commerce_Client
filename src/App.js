@@ -1,24 +1,86 @@
-import logo from './logo.svg';
-import './App.css';
+
+import { useEffect } from 'react';
+import WebFont from 'webfontloader';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Header from './components/Layout/Header/Header';
+import Footer from './components/Layout/Footer/Footer';
+import Home from './components/Home/Home';
+import "./App.css";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ProductDerails from './components/Products/ProductDerails';
+import Products from './components/Products/Products';
+import Search from './components/Products/Search';
+import LoginSignUp from './components/User/LoginSignUp';
+import { loadUser } from './actions/userAction';
+import store from "./store";
+import { useSelector } from 'react-redux';
+import UserOptions from './components/Layout/Header/UserOptions';
+import axios from 'axios';
+import Profile from './components/User/Profile';
+import ProtectedRoute from './components/Route/ProtectedRoute';
+import UpdateProfile from './components/User/UpdateProfile';
+
+
 
 function App() {
+
+
+
+  const { isAuthenticated, user } = useSelector((state) => state.user)
+  axios.defaults.withCredentials = true;
+  // console.log(user);
+  useEffect(() => {
+    WebFont.load({
+      google: {
+        families: ["Roboto", "Droid Sans", "Chilanka"],
+      },
+    });
+    store.dispatch(loadUser())
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+
+      <Router>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <Header />
+        {isAuthenticated && <UserOptions user={user} />}
+        <Routes>
+          <Route path='/' element={<Home />}></Route>
+          <Route path='home' element={<Home />}></Route>
+          <Route path='/product/:id' element={<ProductDerails />}></Route>
+          <Route path='/products' element={<Products />}></Route>
+          <Route path='/products/:keyword' element={<Products />}></Route>
+          <Route path='/search' element={<Search />}></Route>
+          <Route path='/login' element={<LoginSignUp />}></Route>
+          {/* <Route path='/account' element={<ProtectedRoute/>}> */}
+
+
+
+          {/* </Route> */}
+          <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
+            <Route path='/account' element={<Profile />}></Route>
+            <Route path='/me/update' element={<UpdateProfile/>}></Route>
+          </Route>
+          {/* <ProtectedRoute path="/account" element={<Profile/>}></ProtectedRoute> */}
+
+        </Routes>
+
+        <Footer />
+      </Router>
+
+    </>
   );
 }
 
