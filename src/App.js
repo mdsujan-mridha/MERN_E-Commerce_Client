@@ -20,6 +20,9 @@ import axios from 'axios';
 import Profile from './components/User/Profile';
 import ProtectedRoute from './components/Route/ProtectedRoute';
 import UpdateProfile from './components/User/UpdateProfile';
+import ChangePassword from './components/User/ChangePassword';
+import ForgotPasswordRequest from './components/User/ForgotPasswordRequest';
+import ResetPassword from './components/User/ResetPassword';
 
 
 
@@ -64,6 +67,8 @@ function App() {
           <Route path='/products/:keyword' element={<Products />}></Route>
           <Route path='/search' element={<Search />}></Route>
           <Route path='/login' element={<LoginSignUp />}></Route>
+          <Route path='/forgot/password' element={<ForgotPasswordRequest/>}></Route>
+          <Route  path="/password/reset/:token" element={<ResetPassword/>} />
           {/* <Route path='/account' element={<ProtectedRoute/>}> */}
 
 
@@ -72,6 +77,8 @@ function App() {
           <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
             <Route path='/account' element={<Profile />}></Route>
             <Route path='/me/update' element={<UpdateProfile/>}></Route>
+            <Route path='/update/password' element={<ChangePassword/>}></Route>
+            
           </Route>
           {/* <ProtectedRoute path="/account" element={<Profile/>}></ProtectedRoute> */}
 

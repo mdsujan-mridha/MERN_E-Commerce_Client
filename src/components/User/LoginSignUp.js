@@ -56,9 +56,6 @@ const LoginSignUp = () => {
         myForm.set("avatar", avatar);
         dispatch(register(myForm));
         console.log(name,email,password);
-
-
-
     };
     // register data change
 
@@ -151,13 +148,13 @@ const LoginSignUp = () => {
                                             onChange={(e) => setLoginPassword(e.target.value)}
                                         />
                                     </div>
-                                    <Link to="/"> Forget password ? </Link>
+                                    <Link to="/forgot/password"> Forget password ? </Link>
                                     <input type="submit" value="Login" className='loginBtn' />
                                 </form>
                                 <form
                                     className="signUpForm"
                                     ref={registerTab}
-                                    encType="multipart/form-data"
+                                    encType="application/json"
                                     onSubmit={registerSubmit}
                                 >
                                     <div className="signUpName">
