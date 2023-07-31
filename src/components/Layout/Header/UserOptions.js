@@ -1,15 +1,16 @@
-import { Dashboard, ExitToApp, ListAlt, Person } from '@mui/icons-material';
+import { Dashboard, ExitToApp, ListAlt, Person,ShoppingCart } from '@mui/icons-material';
 import { Backdrop, SpeedDial, SpeedDialAction } from '@mui/material';
 import React from 'react';
 import { useState } from 'react';
 import { Fragment } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { logout } from '../../../actions/userAction';
 import "./Header.css";
 
 const UserOptions = ({user}) => {
+    const{cartItems} = useSelector((state) =>state.cart);
     const[open,setOpen] = useState(false);
     const navigate = useNavigate();
        
@@ -19,6 +20,15 @@ const UserOptions = ({user}) => {
     const options =[
         {icon:<ListAlt />,name:"Orders",func:orders },
         {icon:<Person />,name:"Profile",func:account },
+        {
+            icon:(
+                <ShoppingCart 
+                style={{color:cartItems.length >0 ? "tomato":"unset"}}
+                />
+            ),
+            name:`Cart(${cartItems.length})`,
+            func:cart,   
+        },
         {icon:<ExitToApp />,name:"Logout",func:logoutUser },
     ];
     if(user.role === "admin"){
@@ -43,6 +53,9 @@ const UserOptions = ({user}) => {
         dispatch(logout());
         toast.success("Logout Successfully");
         
+     }
+     function cart(){
+        navigate("/cart");
      }
 
     return (

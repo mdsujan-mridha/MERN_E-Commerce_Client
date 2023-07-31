@@ -23,6 +23,8 @@ import UpdateProfile from './components/User/UpdateProfile';
 import ChangePassword from './components/User/ChangePassword';
 import ForgotPasswordRequest from './components/User/ForgotPasswordRequest';
 import ResetPassword from './components/User/ResetPassword';
+import Cart from './components/Cart/Cart';
+import Shipping from './components/Cart/Shipping';
 
 
 
@@ -78,6 +80,8 @@ function App() {
             <Route path='/account' element={<Profile />}></Route>
             <Route path='/me/update' element={<UpdateProfile/>}></Route>
             <Route path='/update/password' element={<ChangePassword/>}></Route>
+            <Route path='/cart' element={<Cart/>}></Route>
+            <Route path='/shipping' element={<Shipping/>}></Route>
             
           </Route>
           {/* <ProtectedRoute path="/account" element={<Profile/>}></ProtectedRoute> */}
