@@ -25,6 +25,7 @@ import ForgotPasswordRequest from './components/User/ForgotPasswordRequest';
 import ResetPassword from './components/User/ResetPassword';
 import Cart from './components/Cart/Cart';
 import Shipping from './components/Cart/Shipping';
+import ConfirmOrder from './components/Cart/ConfirmOrder';
 
 
 
@@ -82,7 +83,7 @@ function App() {
             <Route path='/update/password' element={<ChangePassword/>}></Route>
             <Route path='/cart' element={<Cart/>}></Route>
             <Route path='/shipping' element={<Shipping/>}></Route>
-            
+            <Route path='/order/confirm' element={<ConfirmOrder/>}></Route>
           </Route>
           {/* <ProtectedRoute path="/account" element={<Profile/>}></ProtectedRoute> */}
 
