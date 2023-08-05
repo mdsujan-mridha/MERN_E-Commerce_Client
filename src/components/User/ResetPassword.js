@@ -27,7 +27,7 @@ const ResetPassword = ({match}) => {
     
         myForm.set("password", password);
         myForm.set("confirmPassword", confirmPassword);
-        dispatch(resetPassword(match.params.tokenm,myForm));
+        dispatch(resetPassword(match.params.token,myForm));
       };
       useEffect( ()=>{
          if(error){

@@ -26,6 +26,13 @@ import ResetPassword from './components/User/ResetPassword';
 import Cart from './components/Cart/Cart';
 import Shipping from './components/Cart/Shipping';
 import ConfirmOrder from './components/Cart/ConfirmOrder';
+import { useState } from 'react';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import Payment from './components/Cart/Payment';
+import OrderSuccess from './components/Cart/OrderSuccess';
+import MyOrder from './components/Order/MyOrder';
+import OrderDetails from './components/Order/OrderDetails';
 
 
 
@@ -36,13 +43,21 @@ function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user)
   axios.defaults.withCredentials = true;
   // console.log(user);
+  const [stripeApiKey, setStripeApiKey] = useState("");
+
+  async function getStripeApiKey() {
+    const { data } = await axios.get("http://localhost:5000/api/v1/stripeapikey");
+    setStripeApiKey(data.stripeApiKey);
+    // console.log(data);
+  }
   useEffect(() => {
     WebFont.load({
       google: {
         families: ["Roboto", "Droid Sans", "Chilanka"],
       },
     });
-    store.dispatch(loadUser())
+    store.dispatch(loadUser());
+    getStripeApiKey();
   }, [])
 
   return (
@@ -70,8 +85,8 @@ function App() {
           <Route path='/products/:keyword' element={<Products />}></Route>
           <Route path='/search' element={<Search />}></Route>
           <Route path='/login' element={<LoginSignUp />}></Route>
-          <Route path='/forgot/password' element={<ForgotPasswordRequest/>}></Route>
-          <Route  path="/password/reset/:token" element={<ResetPassword/>} />
+          <Route path='/forgot/password' element={<ForgotPasswordRequest />}></Route>
+          <Route path="/password/reset/:token" element={<ResetPassword />} />
           {/* <Route path='/account' element={<ProtectedRoute/>}> */}
 
 
@@ -79,11 +94,27 @@ function App() {
           {/* </Route> */}
           <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
             <Route path='/account' element={<Profile />}></Route>
-            <Route path='/me/update' element={<UpdateProfile/>}></Route>
-            <Route path='/update/password' element={<ChangePassword/>}></Route>
-            <Route path='/cart' element={<Cart/>}></Route>
-            <Route path='/shipping' element={<Shipping/>}></Route>
-            <Route path='/order/confirm' element={<ConfirmOrder/>}></Route>
+            <Route path='/me/update' element={<UpdateProfile />}></Route>
+            <Route path='/update/password' element={<ChangePassword />}></Route>
+            <Route path='/cart' element={<Cart />}></Route>
+            <Route path='/shipping' element={<Shipping />}></Route>
+            <Route path='/order/confirm' element={<ConfirmOrder />}></Route>
+            <Route>
+              {stripeApiKey && (
+                <Route
+                  path="/process/payment"
+                  
+                  element={
+                    <Elements stripe={loadStripe(stripeApiKey)} >
+                      <Payment stripeApiKey = {stripeApiKey}/>
+                    </Elements>
+                  }
+                ></Route>
+              )}
+            </Route>
+            <Route path='/success' element={<OrderSuccess/>}></Route>
+            <Route path='/orders' element={<MyOrder/>}></Route>
+            <Route path='/order/:id' element={<OrderDetails/>}></Route>
           </Route>
           {/* <ProtectedRoute path="/account" element={<Profile/>}></ProtectedRoute> */}
 

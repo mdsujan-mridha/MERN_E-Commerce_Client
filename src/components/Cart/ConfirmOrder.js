@@ -5,29 +5,30 @@ import CheckoutSteps from './CheckoutSteps';
 import { Typography } from '@mui/material';
 import "./ConfirmOrder.css";
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 const ConfirmOrder = () => {
     const { shippingInfo, cartItems } = useSelector((state) => state.cart);
     const { user } = useSelector((state) => state.user);
-
+    const navigate =  useNavigate();
     const subtotal = cartItems.reduce(
         (acc, item) => acc + item.quantity * item.price,
         0
       );
 
     // console.log(cartItems.price);
-    const shippingCharges = subtotal > 1000 ? 0 : 200;
+    const shippingPrice = subtotal > 1000 ? 0 : 200;
     const tax = subtotal * 0.05;
-    const totalPrice = subtotal + shippingCharges + tax;
-    const address = `${shippingInfo.address},${shippingInfo.city},${shippingInfo.state},${shippingInfo.pinCode},${shippingInfo.country}`;
+    const totalPrice = subtotal + shippingPrice + tax;
+    const address = `${shippingInfo.address},${shippingInfo.city},${shippingInfo.state},${shippingInfo.pinCode},${shippingInfo.country},${shippingInfo?.phoneNumber}`;
     const proceedToPayment = () => {
         const data = {
             subtotal,
-            shippingCharges,
+            shippingPrice,
             tax,
             totalPrice
         };
         sessionStorage.setItem("orderInfo", JSON.stringify(data));
+        navigate("/process/payment")
 
     }
 
@@ -46,7 +47,7 @@ const ConfirmOrder = () => {
                             </div>
                             <div>
                                 <p>Phone:</p>
-                                <span>{shippingInfo.phoneNo}</span>
+                                <span>{shippingInfo.phoneNumber}</span>
                             </div>
                             <div>
                                 <p>Address:</p>
@@ -84,7 +85,7 @@ const ConfirmOrder = () => {
                             </div>
                             <div>
                                 <p>Shipping Charges:</p>
-                                <span>{shippingCharges}</span>
+                                <span>{shippingPrice}</span>
                             </div>
                             <div>
                                 <p>GST:</p>
