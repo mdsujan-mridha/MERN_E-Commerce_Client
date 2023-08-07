@@ -33,6 +33,7 @@ import Payment from './components/Cart/Payment';
 import OrderSuccess from './components/Cart/OrderSuccess';
 import MyOrder from './components/Order/MyOrder';
 import OrderDetails from './components/Order/OrderDetails';
+import Dashboard from './components/Admin/Dashboard';
 
 
 
@@ -42,7 +43,7 @@ function App() {
 
   const { isAuthenticated, user } = useSelector((state) => state.user)
   axios.defaults.withCredentials = true;
-  // console.log(user);
+  // console.log(user?.role);
   const [stripeApiKey, setStripeApiKey] = useState("");
 
   async function getStripeApiKey() {
@@ -89,7 +90,19 @@ function App() {
           <Route path="/password/reset/:token" element={<ResetPassword />} />
           {/* <Route path='/account' element={<ProtectedRoute/>}> */}
 
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user?.role === "admin" ? true : false}
+              >
 
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          ></Route>
 
           {/* </Route> */}
           <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
@@ -103,19 +116,22 @@ function App() {
               {stripeApiKey && (
                 <Route
                   path="/process/payment"
-                  
+
                   element={
                     <Elements stripe={loadStripe(stripeApiKey)} >
-                      <Payment stripeApiKey = {stripeApiKey}/>
+                      <Payment stripeApiKey={stripeApiKey} />
                     </Elements>
                   }
                 ></Route>
               )}
             </Route>
-            <Route path='/success' element={<OrderSuccess/>}></Route>
-            <Route path='/orders' element={<MyOrder/>}></Route>
-            <Route path='/order/:id' element={<OrderDetails/>}></Route>
+            <Route path='/success' element={<OrderSuccess />}></Route>
+            <Route path='/orders' element={<MyOrder />}></Route>
+            <Route path='/order/:id' element={<OrderDetails />}></Route>
+
           </Route>
+          {/* admin  */}
+
           {/* <ProtectedRoute path="/account" element={<Profile/>}></ProtectedRoute> */}
 
         </Routes>

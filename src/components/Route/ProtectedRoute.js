@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 
 
@@ -10,7 +11,8 @@ const ProtectedRoute = ({
   adminRoute,
   isAdmin,
   redirect = "/login",
-  redirectAdmin = "/profile",
+  redirectAdmin = "/account",
+  
 })=>{
    if(isAuthenticated === false){
     return <Navigate to={redirect} />
