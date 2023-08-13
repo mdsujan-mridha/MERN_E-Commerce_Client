@@ -34,6 +34,14 @@ import OrderSuccess from './components/Cart/OrderSuccess';
 import MyOrder from './components/Order/MyOrder';
 import OrderDetails from './components/Order/OrderDetails';
 import Dashboard from './components/Admin/Dashboard';
+import ProductList from './components/Admin/ProductList';
+import NewProduct from './components/Admin/NewProduct';
+import UpdateProduct from './components/Admin/UpdateProduct';
+import OderList from './components/Admin/OderList';
+import ProcessOrder from './components/Admin/ProcessOrder';
+import ProductReview from './components/Admin/ProductReview';
+import UserList from './components/Admin/UserList';
+import UpdateUser from './components/Admin/UpdateUser';
 
 
 
@@ -60,7 +68,7 @@ function App() {
     store.dispatch(loadUser());
     getStripeApiKey();
   }, [])
-
+  window.addEventListener("contextmenu", (e) => e.preventDefault());
   return (
     <>
 
@@ -89,7 +97,7 @@ function App() {
           <Route path='/forgot/password' element={<ForgotPasswordRequest />}></Route>
           <Route path="/password/reset/:token" element={<ResetPassword />} />
           {/* <Route path='/account' element={<ProtectedRoute/>}> */}
-
+          {/* Admin route  */}
           <Route
             path="/admin/dashboard"
             element={
@@ -103,7 +111,108 @@ function App() {
               </ProtectedRoute>
             }
           ></Route>
+          {/* product list */}
+          <Route
+            path="/admin/products"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user?.role === "admin" ? true : false}
+              >
+                <ProductList />
+              </ProtectedRoute>
+            }
+          ></Route>
+          {/* create new product by admin  */}
+          <Route
+            path="/admin/product"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user?.role === "admin" ? true : false}
+              >
+                <NewProduct />
+              </ProtectedRoute>
+            }
+          ></Route>
+          {/* update product  */}
+          <Route
+            path="/admin/product/:id"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user?.role === "admin" ? true : false}
+              >
+                <UpdateProduct />
+              </ProtectedRoute>
+            }
+          ></Route>
+          {/* get all orders by admin  */}
+          <Route
+            path="/admin/orders"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user?.role === "admin" ? true : false}
+              >
+                <OderList />
+              </ProtectedRoute>
+            }
+          ></Route>
 
+          {/* process order by admin  */}
+          <Route
+            path="/admin/order/:id"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user?.role === "admin" ? true : false}
+              >
+                <ProcessOrder />
+              </ProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/admin/review"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user?.role === "admin" ? true : false}
+              >
+                <ProductReview />
+              </ProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user?.role === "admin" ? true : false}
+              >
+                <UserList />
+              </ProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/admin/user/:id"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user?.role === "admin" ? true : false}
+              >
+                <UpdateUser />
+              </ProtectedRoute>
+            }
+          ></Route>
           {/* </Route> */}
           <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
             <Route path='/account' element={<Profile />}></Route>
@@ -122,7 +231,9 @@ function App() {
                       <Payment stripeApiKey={stripeApiKey} />
                     </Elements>
                   }
-                ></Route>
+                >
+
+                </Route>
               )}
             </Route>
             <Route path='/success' element={<OrderSuccess />}></Route>

@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearErrors, getProduct } from '../../actions/productAction';
+import {clearErrors, getProduct } from '../../actions/productAction';
 import Loader from '../Layout/Loader/Loader';
 import ProductCard from '../Home/ProductCard';
 import "./Products.css";

@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../Layout/Loader/Loader';
 import MetaData from '../Layout/MetaData/MetaData';
-import { loadUser, updateProfile } from '../../actions/userAction';
+import { clearErrors, loadUser, updateProfile } from '../../actions/userAction';
 import { Face, MailOutline } from '@mui/icons-material';
 import { toast } from 'react-toastify';
-import { clearErrors } from '../../actions/productAction';
+
 import { UPDATE_PROFILE_RESET } from '../../constant/userConstant';
 import "./updateProfile.css";
 
