@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {clearErrors, getProductDetails, newReview } from '../../actions/productAction';
+import { clearErrors, getProductDetails, newReview } from '../../actions/productAction';
 import { useParams } from 'react-router-dom';
 import Carousel from 'react-material-ui-carousel';
 

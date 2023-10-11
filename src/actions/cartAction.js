@@ -4,7 +4,7 @@ import { ADD_TO_CART, REMOVE_CART_ITEM, SAVE_SHIPPING_INFO } from "../constant/c
 
 export const addItemToCart = (id,quantity) =>async(dispatch,getState)=>{
 
-    const {data} = await axios.get(`http://localhost:5000/api/v1/product/${id}`);
+    const {data} = await axios.get(`https://mern-r-commerce.onrender.com/api/v1/product/${id}`);
 
     dispatch({
         type:ADD_TO_CART,

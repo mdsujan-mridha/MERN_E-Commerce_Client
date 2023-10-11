@@ -11,7 +11,7 @@ export const createOrder = (order) => async (dispatch) => {
                 "Content-type": "application/json",
             },
         };
-        const { data } = await axios.post(`http://localhost:5000/api/v1/order/new`, order, config)
+        const { data } = await axios.post(`https://mern-r-commerce.onrender.com/api/v1/order/new`, order, config)
         dispatch({
             type: CREATE_ORDER_SUCCESS,
             payload: data
@@ -31,7 +31,7 @@ export const myOrders = () => async (dispatch) => {
     try {
 
         dispatch({ type: MY_ORDER_REQUEST })
-        const { data } = await axios.get(`http://localhost:5000/api/v1/orders/me`);
+        const { data } = await axios.get(`https://mern-r-commerce.onrender.com/api/v1/orders/me`);
         dispatch({
             type: MY_ORDER_SUCCESS,
             payload: data.orders
@@ -51,7 +51,7 @@ export const getOrderDetails = (id) => async (dispatch) => {
 
         dispatch({ type: ORDER_DETAILS_REQUEST })
 
-        const { data } = await axios.get(`http://localhost:5000/api/v1/order/${id}`)
+        const { data } = await axios.get(`https://mern-r-commerce.onrender.com/api/v1/order/${id}`)
         dispatch({
             type: ORDER_DETAILS_SUCCESS,
             payload: data.order
@@ -71,7 +71,7 @@ export const getAllOrders = () => async (dispatch) => {
 
         dispatch({ type: ALL_ORDER_REQUEST })
 
-        const { data } = await axios.get(`http://localhost:5000/api/v1/admin/orders`)
+        const { data } = await axios.get(`https://mern-r-commerce.onrender.com/api/v1/admin/orders`)
         dispatch({
             type: ALL_ORDER_SUCCESS,
             payload: data.orders
@@ -91,7 +91,7 @@ export const updateOrder = (id, order) => async (dispatch) => {
 
     try {
         dispatch({ type: UPDATE_ORDER_REQUEST })
-        const { data } = await axios.put(`http://localhost:5000/api/v1/admin/order/${id}`, order);
+        const { data } = await axios.put(`https://mern-r-commerce.onrender.com/api/v1/admin/order/${id}`, order);
         dispatch({
             type: UPDATE_ORDER_SUCCESS,
             payload: data.success,
@@ -108,7 +108,7 @@ export const deleteOrder = (id) => async (dispatch) => {
     try {
 
         dispatch({ type: DELETE_ORDER_REQUEST })
-        const { data } = await axios.delete(`http://localhost:5000/api/v1/admin/order/${id}`)
+        const { data } = await axios.delete(`https://mern-r-commerce.onrender.com/api/v1/admin/order/${id}`)
 
         dispatch({
             type: DELETE_ORDER_SUCCESS,
