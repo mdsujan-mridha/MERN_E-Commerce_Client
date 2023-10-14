@@ -59,7 +59,7 @@ const Payment = ({ stripeApiKey }) => {
                 },
             };
             const { data } = await axios.post(
-                "https://mern-r-commerce.onrender.com/api/v1/payment/process",
+                "http://localhost:5000/api/v1/payment/process",
                 paymentData,
                 config
             );
